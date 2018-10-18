@@ -1,4 +1,4 @@
 """ Better pygame events """
 
-import pygameui.events.dispatcher
+import pygamegui.events.dispatcher
 events = dispatcher.events

@@ -1,7 +1,7 @@
 import pygame
-from pygameui import Drawable, events
-from pygameui.events.dispatcher import Dispatcher
-from pygameui.utils import Rect, event_code
+from pygamegui import Drawable, events
+from pygamegui.events.dispatcher import Dispatcher
+from pygamegui.utils import Rect, event_code
 
 
 WIDGET_MOUSE_DOWN = event_code()

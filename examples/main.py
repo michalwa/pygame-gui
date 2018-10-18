@@ -1,6 +1,6 @@
 import pygame
-from pygameui import events, renderer
-from pygameui.widget import Widget, WIDGET_MOUSE_DOWN, WIDGET_MOUSE_UP
+from pygamegui import events, renderer
+from pygamegui.widget import Widget, WIDGET_MOUSE_DOWN, WIDGET_MOUSE_UP
 
 
 def on_quit():
