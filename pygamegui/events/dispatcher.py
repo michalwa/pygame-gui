@@ -43,7 +43,6 @@ class Dispatcher:
         elif type(predicate) == int:
             p = Predicate(lambda evt: evt.type == predicate)
         self.__listeners.insert(0, (p, Handler(handler)))
-        return self
 
     def dispatch(self, event):
         """ Dispatches all the given events to the appropriate subscribed listeners """
