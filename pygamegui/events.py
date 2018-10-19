@@ -11,7 +11,8 @@ class Handler:
         num_params = len(signature(self.__handler).parameters)
         if num_params == 0:
             return self.__handler()
-        return self.__handler(event)
+        else:
+            return self.__handler(event)
 
 
 class Predicate:
@@ -42,6 +43,7 @@ class Dispatcher:
             p = Predicate(predicate)
         elif type(predicate) == int:
             p = Predicate(lambda evt: evt.type == predicate)
+
         self.__listeners.insert(0, (p, Handler(handler)))
 
     def dispatch(self, event):
