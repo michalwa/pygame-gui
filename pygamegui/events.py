@@ -20,10 +20,12 @@ class Predicate:
     def __init__(self, predicate: any):
         if callable(predicate):
             self.__predicate = predicate
+        elif type(predicate) == int:
+            self.__predicate = lambda event: event.type == predicate
         elif predicate is None:
-            self.__predicate = lambda _: True
+            self.__predicate = lambda event: True
         else:
-            self.__predicate = lambda _: False
+            self.__predicate = lambda event: False
 
     def test(self, event):
         """ Tests the given event """
@@ -36,15 +38,9 @@ class Dispatcher:
         self.__listeners = []
 
     def subscribe(self, handler: callable(None), predicate: any):
-        p = None
-        if predicate is None:
-            p = Predicate()
-        elif callable(predicate):
-            p = Predicate(predicate)
-        elif type(predicate) == int:
-            p = Predicate(lambda evt: evt.type == predicate)
-
-        self.__listeners.insert(0, (p, Handler(handler)))
+        """ Subscribes the given handler to events filtered by the given predicate.
+        The `predicate` argument can also be the event code. """
+        self.__listeners.insert(0, (Predicate(predicate), Handler(handler)))
 
     def dispatch(self, event):
         """ Dispatches all the given events to the appropriate subscribed listeners """
@@ -55,3 +51,13 @@ class Dispatcher:
 
 events = Dispatcher()
 """ Stores the singleton instance of the Dispatcher class """
+
+__next_event_code = 128
+
+
+def event_code() -> int:
+    """ Returns an event code that is ensured to be unique """
+    global __next_event_code
+    __next_event_code += 1
+    return __next_event_code - 1
+
