@@ -48,7 +48,7 @@ if __name__ == '__main__':
     example_widget.move_to_top()
 
     for widget in (example_widget, another_widget):
-        widget.add(DropShadow(5, 5, (0, 0, 0, 63)))
+        widget.add(DropShadow(5, 5, (0, 0, 0, 31)))
 
         widget.subscribe(on_widget_mouse_down, WIDGET_MOUSE_DOWN)
         widget.subscribe(on_widget_mouse_up, WIDGET_MOUSE_UP)

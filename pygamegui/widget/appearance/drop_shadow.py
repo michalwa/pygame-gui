@@ -1,5 +1,4 @@
-import pygame
-from pygamegui.draw import draw_translucent_rect
+import pygame.gfxdraw
 from pygamegui.widget.appearance.appearance import Appearance
 
 
@@ -11,7 +10,8 @@ class DropShadow(Appearance):
         self.color = color
 
     def before_draw(self, surface: pygame.Surface, widget):
-        draw_translucent_rect(surface, self.color, (widget.rect + (self.x_offset, self.y_offset)).dim())
+        rect = widget.rect + (self.x_offset, self.y_offset)
+        pygame.gfxdraw.box(surface, rect.dim(), self.color)
 
     def after_draw(self, surface: pygame.Surface, widget):
         pass
