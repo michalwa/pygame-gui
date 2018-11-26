@@ -1,11 +1,11 @@
 import pygame
-from pygamegui.renderer import Drawable
-from pygamegui import renderer
+from ..renderer import Drawable, renderer
 
 
 class WidgetGroup(Drawable):
     """ Stores widgets that are meant to be displayed and interacted with in the same scene.
     Allows determining which widget should be clicked, hovered, etc. """
+
     def __init__(self):
         self.__widgets = []
         renderer.add(self)
@@ -69,3 +69,6 @@ class WidgetGroup(Drawable):
 
     def __contains__(self, item):
         return item in self.__widgets
+
+
+default_group = WidgetGroup()

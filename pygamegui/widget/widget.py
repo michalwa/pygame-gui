@@ -1,18 +1,18 @@
 import pygame
-from pygamegui import Drawable, updater
-from pygamegui.events import events, Dispatcher
-from pygamegui.utils import Rect
-from pygamegui.widget.appearance.appearance import Appearance
-from pygamegui.widget.group import WidgetGroup
-from pygamegui.widget.event import *
+import pygame.gfxdraw
+from .. import Drawable, updater
+from ..events import events, Dispatcher
+from ..utils import Rect
+from .group import WidgetGroup, default_group
+from .event import *
 
 
-default_group = WidgetGroup()
 next_widget_id = 0
 
 
 class Widget(Drawable, Dispatcher):
     """ A drawable, interactive GUI widget """
+
     def __init__(self, rect, group: WidgetGroup = default_group):
         super(__class__, self).__init__()
 
@@ -21,33 +21,21 @@ class Widget(Drawable, Dispatcher):
         self.group = group
         """ The widget group this widget belongs to """
         self.__was_hovered = False
-        self.__appearance = []
 
         global next_widget_id
         self.id = next_widget_id
         next_widget_id += 1
 
-        events.subscribe(self.__on_mouse_down, pygame.MOUSEBUTTONDOWN)
-        events.subscribe(self.__on_mouse_up, pygame.MOUSEBUTTONUP)
+        events.subscribe(pygame.MOUSEBUTTONDOWN, self.__on_mouse_down)
+        events.subscribe(pygame.MOUSEBUTTONUP, self.__on_mouse_up)
 
         group.add(self)
         updater.add(self.__update)
 
     def draw(self, surface):
         """ Draws the widget on the given surface """
-        for appearance in self.__appearance:
-            appearance.before_draw(surface, self)
-        self.__appearance.reverse()
-
-        self.__draw_self(surface)
-
-        for appearance in self.__appearance:
-            appearance.after_draw(surface, self)
-        self.__appearance.reverse()
-
-    def __draw_self(self, surface):
-        """ To be overridden by subclasses - draws this widget """
-        pygame.draw.rect(surface, (255, 255, 255), self.rect.dim())
+        pygame.gfxdraw.box(surface, self.rect.dim(), (255, 255, 255))
+        pygame.gfxdraw.rectangle(surface, self.rect.dim(), (0, 0, 0))
 
     def is_hovered(self, covering: bool = True) -> bool:
         """ Whether this widget is hovered with the mouse cursor. If the `covering` parameter is
@@ -72,10 +60,6 @@ class Widget(Drawable, Dispatcher):
     def move_down(self):
         """ Moves the specified widget below the widget that is currently below it in its group """
         self.group.move_down(self)
-
-    def add(self, appearance: Appearance):
-        """ Adds the given appearance to this widget """
-        self.__appearance.append(appearance)
 
     def __update(self):
         is_hovered = self.is_hovered()

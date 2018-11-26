@@ -1,8 +1,6 @@
-import pygame
-
-
 class Rect:
     """ Represents a rectangle """
+
     def __init__(self, dim):
         (self.x, self.y, self.width, self.height) = dim
 

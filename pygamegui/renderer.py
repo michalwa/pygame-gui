@@ -3,6 +3,7 @@ import pygame
 
 class Drawable:
     """ Something drawable """
+
     def draw(self, surface: pygame.Surface):
         """ Draws this drawable on the given surface """
         raise NotImplementedError
@@ -10,6 +11,7 @@ class Drawable:
 
 class Renderer:
     """ Manages rendering on the display surface in a cleaner way """
+
     def __init__(self):
         self.__drawables = []
 

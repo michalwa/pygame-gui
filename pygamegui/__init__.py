@@ -1,3 +1,3 @@
-from pygamegui.renderer import renderer, Drawable
-from pygamegui.events import events
-from pygamegui.updater import updater
+from .renderer import renderer, Drawable
+from .events import events
+from .updater import updater

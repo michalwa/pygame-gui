@@ -1,5 +1,6 @@
 class Updater:
     """ Updates stuff """
+
     def __init__(self):
         self.__listeners = []
 
